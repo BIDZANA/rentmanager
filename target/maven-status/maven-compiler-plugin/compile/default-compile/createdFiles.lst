@@ -1,0 +1,5 @@
+com\epf\rentmanager\ui\servlets\vehicle\VehicleListServlet.class
+com\epf\rentmanager\ui\servlets\vehicle\VehicleDetailsServlet.class
+com\epf\rentmanager\ui\servlets\vehicle\VehicleCreateServlet.class
+com\epf\rentmanager\ui\servlets\vehicle\VehicleEditServlet.class
+com\epf\rentmanager\ui\servlets\vehicle\VehicleDeleteServlet.class
