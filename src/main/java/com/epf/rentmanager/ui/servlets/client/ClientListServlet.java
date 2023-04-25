@@ -1,6 +1,8 @@
 package com.epf.rentmanager.ui.servlets.client;
 
 import com.epf.rentmanager.service.ClientService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,11 +14,17 @@ import java.io.IOException;
 
 @WebServlet("/users")
 public class ClientListServlet extends HttpServlet {
-    private ClientService clientService = ClientService.getInstance();
+
+    public ClientListServlet() {
+    }
+
+    @Autowired
+    ClientService clientService;
 
     @Override
     public void init() throws ServletException {
         super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

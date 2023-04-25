@@ -9,17 +9,12 @@ import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.persistence.ConnectionManager;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public class ReservationDao {
 
-	private static ReservationDao instance = null;
 	private ReservationDao() {}
-	public static ReservationDao getInstance() {
-		if(instance == null) {
-			instance = new ReservationDao();
-		}
-		return instance;
-	}
 	
 	private static final String CREATE_RESERVATION_QUERY = "INSERT INTO Reservation(client_id, vehicle_id, debut, fin) VALUES(?, ?, ?, ?);";
 	private static final String DELETE_RESERVATION_QUERY = "DELETE FROM Reservation WHERE id=?;";
@@ -28,6 +23,7 @@ public class ReservationDao {
 	private static final String FIND_RESERVATIONS_BY_VEHICLE_QUERY = "SELECT id, client_id, debut, fin FROM Reservation WHERE vehicle_id=?;";
 	private static final String FIND_RESERVATIONS_QUERY = "SELECT id, client_id, vehicle_id, debut, fin FROM Reservation;";
 	private static final String COUNT_RESERVATIONS_QUERY = "SELECT COUNT(id) AS count FROM Reservation";
+	private static final String UPDATE_RESERVATION_QUERY = "UPDATE Reservation SET client_id = ?, vehicle_id = ?, debut = ?, fin = ? WHERE id=?;";
 
 	public long create(Reservation reservation) throws DaoException {
 		try{
@@ -46,11 +42,11 @@ public class ReservationDao {
 		}
 	}
 	
-	public long delete(Reservation reservation) throws DaoException {
+	public long delete(Long id) throws DaoException {
 		try{
 			Connection connection = ConnectionManager.getConnection();
 			PreparedStatement preparedStatement = connection.prepareStatement(DELETE_RESERVATION_QUERY);
-			preparedStatement.setLong(1,reservation.getId());
+			preparedStatement.setLong(1,id);
 			long result = preparedStatement.executeUpdate(); //afin de vérifier la suppression
 			preparedStatement.close();
 			connection.close();
@@ -157,6 +153,20 @@ public class ReservationDao {
 	}
 
 	public void update(Reservation reservation) throws DaoException {
-		// A implémenter
+		try {
+			Connection conn = ConnectionManager.getConnection();
+			PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_RESERVATION_QUERY);
+
+			preparedStatement.setLong(1, reservation.getClient_id());
+			preparedStatement.setLong(2, reservation.getVehicle_id());
+			preparedStatement.setDate(3, Date.valueOf(reservation.getDebut()));
+			preparedStatement.setDate(4, Date.valueOf(reservation.getFin()));
+			preparedStatement.setLong(5, reservation.getId());
+
+			preparedStatement.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

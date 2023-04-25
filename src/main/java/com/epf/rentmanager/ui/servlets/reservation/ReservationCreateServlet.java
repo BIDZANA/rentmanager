@@ -21,22 +21,29 @@ import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 
 @WebServlet("/rents/create")
 public class ReservationCreateServlet extends HttpServlet {
 
-	private static final long serialVersionUID = -6400136202534318065L;
+	public ReservationCreateServlet() {
+	}
 
-	private VehicleService vehicleService = VehicleService.getInstance();
-	private ClientService clientService = ClientService.getInstance();
-	private ReservationService reservationService = ReservationService.getInstance();
-	
+	@Autowired
+	ReservationService reservationService;
+	@Autowired
+	ClientService clientService;
+	@Autowired
+	VehicleService vehicleService;
+
 	@Override
 	public void init() throws ServletException {
 		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
-	
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/rents/create.jsp");
 		try {
@@ -57,15 +64,15 @@ public class ReservationCreateServlet extends HttpServlet {
 		try {
 			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			reservationService.create(new Reservation(
-					Long.parseLong(request.getParameter("client_id").toString()),
-					Long.parseLong(request.getParameter("vehicle_id").toString()),
-					LocalDate.parse(request.getParameter("debut").toString(), formatter),
-					LocalDate.parse(request.getParameter("fin").toString(), formatter)
+					Long.parseLong(request.getParameter("client_id")),
+					Long.parseLong(request.getParameter("vehicle_id")),
+					LocalDate.parse(request.getParameter("debut"), formatter),
+					LocalDate.parse(request.getParameter("fin"), formatter)
 			));
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		response.sendRedirect("../rents");
+		response.sendRedirect("http://localhost:8080/rentmanager/rents");
 	}
 }

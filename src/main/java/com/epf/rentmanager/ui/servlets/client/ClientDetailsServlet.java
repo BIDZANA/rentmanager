@@ -5,6 +5,8 @@ import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,29 +20,35 @@ import java.util.List;
 @WebServlet("/users/details")
 public class ClientDetailsServlet extends HttpServlet {
 
-    private final VehicleService vehicleService = VehicleService.getInstance();
+    public ClientDetailsServlet() {
+    }
 
-    private final ClientService clientService = ClientService.getInstance();
-
-    private final ReservationService reservationService = ReservationService.getInstance();
+    @Autowired
+    VehicleService vehicleService;
+    @Autowired
+    ReservationService reservationService;
+    @Autowired
+    ClientService clientService;
 
     @Override
     public void init() throws ServletException {
         super.init();
+        SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         final RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/details.jsp");
         try {
-            final Long id = Long.parseLong(request.getParameter("id"));
-            final List<Reservation> reservations = reservationService.findResaByClientId(id);
-            final List<Vehicle> vehicles = vehicleService.findByClient(id);
+            Long id = Long.parseLong(request.getParameter("id"));
+            List<Reservation> reservations = reservationService.findResaByClientId(id);
+            List<Vehicle> vehicles = vehicleService.findByClient(id);
+
             request.setAttribute("user", clientService.findById(id));
             request.setAttribute("reservations", reservations);
             request.setAttribute("vehicles", vehicles);
             request.setAttribute("countr", reservations.size());
             request.setAttribute("countv", vehicles.size());
-        } catch (final Exception e) {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         dispatcher.forward(request, response);

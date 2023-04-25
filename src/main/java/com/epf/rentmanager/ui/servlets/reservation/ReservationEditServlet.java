@@ -21,23 +21,26 @@ import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.ClientService;
 import com.epf.rentmanager.service.ReservationService;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @WebServlet("/rents/edit")
 public class ReservationEditServlet extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 7503537610294149791L;
 
-	private ClientService clientService = ClientService.getInstance();
+	public ReservationEditServlet() {
+	}
 
-	private VehicleService vehicleService = VehicleService.getInstance();
+	@Autowired
+	ClientService clientService;
+	@Autowired
+	VehicleService vehicleService;
+	@Autowired
+	ReservationService reservationService;
 
-	private ReservationService reservationService = ReservationService.getInstance();
-	
 	@Override
 	public void init() throws ServletException {
 		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -68,9 +71,9 @@ public class ReservationEditServlet extends HttpServlet {
 		try {
 			final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 			reservationService.update(new Reservation(
-					Integer.parseInt(request.getParameter("id").toString()),
-					Integer.parseInt(request.getParameter("client").toString()),
-					Integer.parseInt(request.getParameter("car").toString()),
+					Long.parseLong(request.getParameter("id").toString()),
+					Long.parseLong(request.getParameter("client").toString()),
+					Long.parseLong(request.getParameter("car").toString()),
 					LocalDate.parse(request.getParameter("begin").toString(), formatter),
 					LocalDate.parse(request.getParameter("end").toString(), formatter)
 			));

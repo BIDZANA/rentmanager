@@ -14,19 +14,22 @@ import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @WebServlet("/cars/create")
 public class VehicleCreateServlet extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6948972974079594797L;
 
-	private VehicleService vehicleService = VehicleService.getInstance();
-	
+	public VehicleCreateServlet() {
+	}
+
+	@Autowired
+	VehicleService vehicleService;
+
 	@Override
 	public void init() throws ServletException {
 		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,6 +50,6 @@ public class VehicleCreateServlet extends HttpServlet {
 		} catch (DaoException e) {
 			throw new RuntimeException(e);
 		}
-		response.sendRedirect("../cars");
+		response.sendRedirect("http://localhost:8080/rentmanager/cars");
 	}
 }

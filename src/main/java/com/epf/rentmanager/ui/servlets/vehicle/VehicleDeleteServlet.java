@@ -12,31 +12,33 @@ import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @WebServlet("/cars/delete")
 public class VehicleDeleteServlet extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4325359811604254645L;
 
-	private VehicleService vehicleService = VehicleService.getInstance();
-	
+	public VehicleDeleteServlet() {
+	}
+
+	@Autowired
+	VehicleService vehicleService;
+
 	@Override
 	public void init() throws ServletException {
 		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			Vehicle vehicle = vehicleService.findById(Long.parseLong(request.getParameter("id")));
-			vehicleService.delete(vehicle);
+			vehicleService.delete(Long.parseLong(request.getParameter("id")));
 		} catch (NumberFormatException | ServiceException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		} catch (DaoException e) {
 			throw new RuntimeException(e);
 		}
-		response.sendRedirect("../cars");
+		response.sendRedirect("http://localhost:8080/rentmanager/cars");
 	}
 }

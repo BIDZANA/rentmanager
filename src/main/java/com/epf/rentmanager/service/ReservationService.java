@@ -3,23 +3,17 @@ package com.epf.rentmanager.service;
 import com.epf.rentmanager.dao.ReservationDao;
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
-import com.epf.rentmanager.model.Client;
 import com.epf.rentmanager.model.Reservation;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ReservationService {
-    //Reservation(long id, long client_id, long vehicule_id, LocalDate debut, LocalDate fin)
 
     private ReservationDao reservationDao;
-    public static ReservationService instance;
-    public ReservationService(){this.reservationDao = ReservationDao.getInstance();}
-
-    public static ReservationService getInstance(){
-        if (instance == null){
-            instance = new ReservationService();
-        }
-        return instance;
+    private ReservationService(ReservationDao reservationDao){
+        this.reservationDao = reservationDao;
     }
 
     public long create(Reservation reservation) throws DaoException, ServiceException {
@@ -35,26 +29,64 @@ public class ReservationService {
     }
 
     public List<Reservation> findAll() throws DaoException {
-        return reservationDao.findAll();
+        try {
+            return this.reservationDao.findAll();
+        }catch (DaoException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    public long delete(Reservation reservation) throws ServiceException, DaoException {
-        return reservationDao.delete(reservation);
+    public long delete(Long reservation_id) throws ServiceException, DaoException {
+        try {
+            return reservationDao.delete(reservation_id);
+        }catch (DaoException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     public List<Reservation> findResaByClientId(long clientId) throws DaoException {
-        return reservationDao.findResaByClientId(clientId);
+        try {
+            return this.reservationDao.findResaByClientId(clientId);
+        }catch (DaoException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public List<Reservation> findResaByVehicletId(long vehicleId) throws DaoException {
-        return reservationDao.findResaByVehicleId(vehicleId);
+        try {
+            return this.reservationDao.findResaByVehicleId(vehicleId);
+        }catch (DaoException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public Reservation findById(long id) throws DaoException {
-        return reservationDao.findById(id);
+        try {
+            return this.reservationDao.findById(id);
+        } catch (DaoException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void update(Reservation reservation) throws DaoException {
-        reservationDao.update(reservation);
+        try {
+            this.reservationDao.update(reservation);
+        }catch (DaoException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int count() throws ServiceException {
+        try {
+            return this.reservationDao.count();
+        }catch (DaoException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

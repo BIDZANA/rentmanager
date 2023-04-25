@@ -11,15 +11,20 @@ import com.epf.rentmanager.service.VehicleService;
 import com.epf.rentmanager.utils.IOUtils;
 
 import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.List;
 
 
 public class UserController {
 
-    private ClientService clientService = ClientService.getInstance();
-    private VehicleService vehicleService = VehicleService.getInstance();
-    private ReservationService reservationService = ReservationService.getInstance();
+    private ClientService clientService;
+    private VehicleService vehicleService;
+    private ReservationService reservationService;
+
+    public UserController(ClientService clientService, VehicleService vehicleService, ReservationService reservationService) {
+        this.clientService = clientService;
+        this.vehicleService = vehicleService;
+        this.reservationService = reservationService;
+    }
 
     public UserController() {
 

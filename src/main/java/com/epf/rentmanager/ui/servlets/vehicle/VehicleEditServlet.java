@@ -12,19 +12,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Vehicle;
 import com.epf.rentmanager.service.VehicleService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 @WebServlet("/cars/edit")
 public class VehicleEditServlet extends HttpServlet {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8364737954085254961L;
 
-	private VehicleService vehicleService = VehicleService.getInstance();
+	public VehicleEditServlet() {
+	}
+
+	@Autowired
+	VehicleService vehicleService;
 
 	@Override
 	public void init() throws ServletException {
 		super.init();
+		SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -37,18 +40,18 @@ public class VehicleEditServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 	
-	/*protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			vehicleService.update(new Vehicle(
-				Integer.parseInt(request.getParameter("id").toString()),
-				request.getParameter("manufacturer").toString(),
-				request.getParameter("modele").toString(),
-				Integer.parseInt(request.getParameter("seats").toString())
+				Integer.parseInt(request.getParameter("id")),
+				request.getParameter("manufacturer"),
+				request.getParameter("modele"),
+				Integer.parseInt(request.getParameter("seats"))
 			));
 		} catch (ServiceException e) {
 			System.out.println(e.getMessage());
 			e.printStackTrace();
 		}
-		response.sendRedirect("../cars");
-	}*/
+		response.sendRedirect("http://localhost:8080/rentmanager/cars");
+	}
 }
