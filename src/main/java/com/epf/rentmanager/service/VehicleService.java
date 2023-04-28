@@ -12,7 +12,7 @@ public class VehicleService {
 
 	private VehicleDao vehicleDao;
 
-	private VehicleService(VehicleDao vehicleDao){
+	public VehicleService(VehicleDao vehicleDao){
 		this.vehicleDao = vehicleDao;
 	}
 
@@ -62,7 +62,7 @@ public class VehicleService {
 		}
 	}
 
-	public long count() throws ServiceException {
+	public int count() throws ServiceException {
 		try {
 			return this.vehicleDao.count();
 		}catch (DaoException e) {

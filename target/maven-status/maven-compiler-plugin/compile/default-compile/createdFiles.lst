@@ -1,4 +1,6 @@
 com\epf\rentmanager\ui\servlets\vehicle\VehicleListServlet.class
+com\epf\rentmanager\configuration\WebConfiguration.class
+com\epf\rentmanager\configuration\AppConfiguration.class
 com\epf\rentmanager\ui\servlets\vehicle\VehicleDetailsServlet.class
 com\epf\rentmanager\ui\servlets\vehicle\VehicleCreateServlet.class
 com\epf\rentmanager\ui\servlets\vehicle\VehicleEditServlet.class

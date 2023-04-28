@@ -18,6 +18,8 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 @WebServlet("/cars/delete")
 public class VehicleDeleteServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public VehicleDeleteServlet() {
 	}
 

@@ -25,49 +25,38 @@
                     <!-- Horizontal Form -->
                     <h4>Cr&eacute;ation d'un v&eacute;hicule</h4>
                     <div class="box">
-                        <!-- form start -->
-                        <!-- Le  type de methode http qui sera appel� lors de action submit du formulaire -->
-                        <!-- est d�crit an l'attribut "method" de la balise forme -->
-                        <!-- action indique � quel "cible" sera envoyr la requ�te, ici notre Servlet qui sera bind sur -->
-                        <!-- /vehicles/create -->
                         <form class="form-horizontal" method="post">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="manufacturer" class="col-sm-2 control-label">Marque</label>
+                                    <label for="manufacturer" class="col-sm-2 control-label">Marque<label style="color: red">*</label></label>
 
-									<!-- Pour r�up�rer la valeur rentr�e dans un champ input de cette jsp au niveau de votre servlet -->
-									<!-- vous devez passer par les methodes getParameter de l'objet request, est sp�cifiant la valeur -->
-									<!-- de l'attribut "name" de l'input -->
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="manufacturer" name="manufacturer" placeholder="Marque" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="modele" class="col-sm-2 control-label">Modele</label>
+                                    <label for="modele" class="col-sm-2 control-label">Modele<label style="color: red">*</label></label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="modele" name="modele" placeholder="Modele" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="seats" class="col-sm-2 control-label">Nombre de places</label>
+                                    <label for="seats" class="col-sm-2 control-label">Nombre de places<label style="color: red">*</label></label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="seats" name="seats" placeholder="Nombre de places" required>
-                                    </div>
-                                </div>
-                                <!--
-                                <div class="form-group">
-                                    <label for="owner" class="col-sm-2 control-label">Propriétaire</label>
-
-                                    <div class="col-sm-10">
-                                        <select class="form-control" id="owner" name="owner">
-                                            <option value="1">John Doe</option>
-                                            <option value="2">Jane Doe</option>
+                                        <select class="form-control" id="seats" name="seats" required>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5" selected>5</option>
+                                            <option value="6">6</option>
+                                            <option value="7">7</option>
+                                            <option value="8">8</option>
+                                            <option value="9">9</option>
                                         </select>
                                     </div>
                                 </div>
-                                -->
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">
@@ -80,6 +69,7 @@
                 </div>
                 <!-- /.col -->
             </div>
+            <p style="text-align: center"><label style="color: red">*</label> = champ obligatoire</p>
         </section>
         <!-- /.content -->
     </div>

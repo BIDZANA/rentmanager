@@ -1,5 +1,5 @@
 package com.epf.rentmanager.ui.cli;
-
+/*
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Client;
@@ -13,9 +13,9 @@ import com.epf.rentmanager.utils.IOUtils;
 import java.time.LocalDate;
 import java.util.List;
 
-
+*/
 public class UserController {
-
+/*
     private ClientService clientService;
     private VehicleService vehicleService;
     private ReservationService reservationService;
@@ -73,7 +73,7 @@ public class UserController {
     public long deleteVehicle() throws DaoException, ServiceException{
         Vehicle createdVehicle = new Vehicle();
         createdVehicle.setId(IOUtils.readInt("Veuillez saisir l'id du véhicule à supprimer: "));
-        return vehicleService.delete(createdVehicle);
+        return vehicleService.delete(createdVehicle.getId());
     }
 
     public long createReservation() throws DaoException, ServiceException{
@@ -126,7 +126,7 @@ public class UserController {
     public long deleteReservation() throws DaoException, ServiceException{
         Reservation reservation = new Reservation();
         reservation.setId(IOUtils.readInt("Veuillez saisir l'id du véhicule à supprimer: "));
-        return reservationService.delete(reservation);
+        return reservationService.delete(reservation.getId());
     }
 
     public void accueil(){
@@ -142,5 +142,5 @@ public class UserController {
         "Menu \n 1-Créer un client \n 2-lister tous les clients \n 3-Supprimer un Client \n 4-Créer un Véhicule \n 5-Lister tous les Véhicules \n 6-Supprimer un Véhicule \n 7-Créer une réservation \n 8-Lister toutes les Réservations \n 9-Lister toutes les Réservations associées à un client \n 10-Lister toutes les Réservations d'un véhicule donné \n 11-Supprimer une réservation  \n 0-Quitter"
     );
         return IOUtils.readInt("Saisissez un nombre: ");
-    }
+    }*/
 }

@@ -17,10 +17,13 @@ import java.io.IOException;
 @WebServlet("/users/delete")
 public class ClientDeleteServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
     public ClientDeleteServlet() {
     }
 
     @Autowired
+    public
     ClientService clientService;
 
     @Override
@@ -29,7 +32,7 @@ public class ClientDeleteServlet extends HttpServlet {
         SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
     }
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             clientService.delete(Long.parseLong(request.getParameter("id")));
         } catch (NumberFormatException | ServiceException e) {

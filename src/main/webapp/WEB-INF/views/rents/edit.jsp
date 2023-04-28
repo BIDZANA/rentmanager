@@ -24,14 +24,14 @@
                 <div class="col-md-12">
                     <!-- Horizontal Form -->
                     <div class="box">
-                        <!-- form start -->
+                        <!-- form start
                         <form class="form-horizontal" method="post">
                             <div class="box-body">
                             	<div class="form-group">
                                     <label for="id" class="col-sm-2 control-label">Identifiant</label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="id" name="id" placeholder="Identifiant" required value="${id}" disabled>
+                                        <input type="text" class="form-control" id="id" name="id" placeholder="Reservation No ${id}" required value="${id}" disabled>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -61,7 +61,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="begin" name="begin" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="${begin}">
+                                               data-inputmask="'alias': 'yyyy-mm-dd'" data-mask value="${begin}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -69,9 +69,61 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="end" name="end" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="${end}">
+                                               data-inputmask="'alias': 'yyyy-mm-dd'" data-mask value="${end}">
                                     </div>
                                 </div>
+                            </div>
+                            /.box-body
+                            <div class="box-footer">
+                                <button type="submit" class="btn btn-info pull-right">Modifier</button>
+                            </div>
+                             /.box-footer -->
+                        </form>-->
+
+                        <form class="form-horizontal" method="post" >
+                            <div class="box-body">
+                                <div class="form-group">
+                                    <label for="id" class="col-sm-2 control-label">Numéro de reservation</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="id" name="id" placeholder="${id}" required value="${id}" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="vehicle" class="col-sm-2 control-label">Voiture</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="vehicle" name="vehicle" placeholder="${vehicle}" value="${reservation.vehicle_id}">
+                                    </div>
+                                </div>
+
+                                <!-- client -->
+                                <div class="form-group">
+                                    <label for="client" class="col-sm-2 control-label">Client</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="client" name="client" placeholder="${client}" value="${reservation.client_id}">
+                                    </div>
+                                </div>
+
+                                <!-- startTime -->
+                                <div class="form-group">
+                                    <label for="startTime" class="col-sm-2 control-label">Debut</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="startTime" name="startTime" placeholder="${reservation.startTime}" value="${reservation.startTime}">
+                                    </div>
+                                </div>
+
+                                <!-- endTime -->
+                                <div class="form-group">
+                                    <label for="endTime" class="col-sm-2 control-label">Fin</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="date" class="form-control" id="endTime" name="endTime" placeholder="${reservation.endTime}" value="${reservation.endTime}">
+                                    </div>
+                                </div>
+
                             </div>
                             <!-- /.box-body -->
                             <div class="box-footer">

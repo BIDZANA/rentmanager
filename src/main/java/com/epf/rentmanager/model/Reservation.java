@@ -9,6 +9,14 @@ public class Reservation {
     public LocalDate debut;
     public LocalDate fin;
 
+    public Reservation(long id, long client_id, long vehicle_id, LocalDate debut, LocalDate fin) {
+        this.id = id;
+        this.client_id = client_id;
+        this.vehicle_id = vehicle_id;
+        this.debut = debut;
+        this.fin = fin;
+    }
+
     public Reservation(long client_id, long vehicle_id, LocalDate debut, LocalDate fin) {
         this.client_id = client_id;
         this.vehicle_id = vehicle_id;

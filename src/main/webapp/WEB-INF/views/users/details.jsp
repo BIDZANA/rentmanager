@@ -87,7 +87,7 @@
 	
 		                                <c:forEach items="${reservations}" var="reservation">
 		                                    <td>${reservation.id}.</td>
-		                                    <td>${reservation.vehicleId}</td>
+		                                    <td>${reservation.vehicle_id}</td>
 		                                    <td>${reservation.debut}</td>
 		                                    <td>${reservation.fin}</td>
 		                                </tr>

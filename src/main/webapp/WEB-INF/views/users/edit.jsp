@@ -57,7 +57,7 @@
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="naissance" name="naissance" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask value="${user.naissance}">
+                                               data-inputmask="'alias': 'yyyy-mm-dd'" data-mask value="${user.naissance}">
                                     </div>
                                 </div>
                             </div>

@@ -18,6 +18,8 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 @WebServlet("/cars/edit")
 public class VehicleEditServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public VehicleEditServlet() {
 	}
 
@@ -33,7 +35,7 @@ public class VehicleEditServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/vehicles/edit.jsp");
 		try {
-			request.setAttribute("vehicle", vehicleService.findById(Integer.parseInt(request.getParameter("id"))));
+			request.setAttribute("vehicle", vehicleService.findById(Long.parseLong(request.getParameter("id"))));
 		} catch (final Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -43,7 +45,7 @@ public class VehicleEditServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			vehicleService.update(new Vehicle(
-				Integer.parseInt(request.getParameter("id")),
+				Long.parseLong(request.getParameter("id")),
 				request.getParameter("manufacturer"),
 				request.getParameter("modele"),
 				Integer.parseInt(request.getParameter("seats"))

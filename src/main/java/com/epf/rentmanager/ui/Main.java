@@ -6,7 +6,8 @@ import com.epf.rentmanager.ui.cli.Presentation;
 
 public class Main {
   public static void main(String[] args) throws ServiceException, DaoException {
-      Presentation userCmdInterface = new Presentation();
-      userCmdInterface.Application();
+      /*Presentation userCmdInterface = new Presentation();
+      userCmdInterface.Application();*/
+      System.out.println("Rent Manager");
   }
 }

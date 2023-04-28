@@ -1,10 +1,10 @@
 package com.epf.rentmanager.ui.cli;
-
+/*
 import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.utils.IOUtils;
-
-public class Presentation {
+*/
+public class Presentation {/*
   public static void Application() throws ServiceException, DaoException {
 
       UserController userController = new UserController();
@@ -75,5 +75,5 @@ public class Presentation {
                   break;
           }
       }while (connected);
-  }
+  }*/
 }

@@ -6,26 +6,24 @@ import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Reservation;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
 public class ReservationService {
 
     private ReservationDao reservationDao;
-    private ReservationService(ReservationDao reservationDao){
+    public ReservationService(ReservationDao reservationDao){
         this.reservationDao = reservationDao;
     }
 
-    public long create(Reservation reservation) throws DaoException, ServiceException {
-        try{
-            if (reservation.getDebut() != null && reservation.getFin() != null){
-                return reservationDao.create(reservation);
-            }
-        }catch (Exception e){
-            throw new ServiceException("erreur!");
+    public void create(long client_Id, long vehicle_Id, LocalDate startTime, LocalDate endTime) throws ServiceException {
+        Reservation reservation = new Reservation(client_Id, vehicle_Id, startTime, endTime);
+        try {
+            reservationDao.create(reservation);
+        } catch (Exception e) {
+            throw new ServiceException("Problem when creating the reservation " + e.getMessage());
         }
-        System.out.println("Entrées invalides!");
-        return 0;
     }
 
     public List<Reservation> findAll() throws DaoException {
@@ -73,11 +71,13 @@ public class ReservationService {
         return null;
     }
 
-    public void update(Reservation reservation) throws DaoException {
+    public void update(long id, long client_id, long vehicle_id, LocalDate startTime, LocalDate endTime) throws ServiceException {
+        Reservation reservation = new Reservation(id, client_id, vehicle_id, startTime, endTime);
         try {
-            this.reservationDao.update(reservation);
-        }catch (DaoException e) {
+            reservationDao.update(reservation);
+        } catch (Exception e) {
             e.printStackTrace();
+            throw new ServiceException("Problem when updating the reservation " + e.getMessage());
         }
     }
 

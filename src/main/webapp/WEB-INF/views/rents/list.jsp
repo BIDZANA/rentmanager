@@ -34,42 +34,47 @@
                                     <th>Fin</th>
                                     <th>Action</th>
                                 </tr>
-                                
-                                <c:forEach items="${rents}" var="rent">
-                            		
-                            		<!-- Modal -->
-									<div class="modal fade" id="supprModal${rent.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-									  <div class="modal-dialog" role="document">
-									    <div class="modal-content">
-									      <div class="modal-header">
-									        <h5 class="modal-title" id="exampleModalLabel">Confirmation de suppression</h5>
-									      </div>
-									      <div class="modal-body">
-									        Es-tu sur de vouloir supprimer la reservation ${rent.id}?
-									      </div>
-									      <div class="modal-footer">
-									        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-									        <a class="btn btn-primary" href="./rents/delete?id=${rent.id}">Confirmer</a>
-									      </div>
-									    </div>
-									  </div>
-									</div>
-                            	
-                            		<td>${rent.id}</td>
-                            		<td>${rent.vehicle}</td>
-                                    <td>${rent.user}</td>
-                                    <td>${rent.start}</td>
-                                    <td>${rent.end}</td>
-                                    <td>
-                                        <a class="btn btn-success" href="./rents/edit?id=${rent.id}">
-                                            <i class="fa fa-edit"></i>
-                                        </a>
-                                        <a class="btn btn-danger" data-toggle="modal" data-target="#supprModal${rent.id}">
-										  	<i class="fa fa-trash"></i>
-										</a>
-                                    </td>
-                            	</tr>
-                            	</c:forEach>
+
+                                <c:forEach items="${reservations}" var="reservation">
+                                    <tr>
+                                        <div class="modal fade" id="supprModal${reservation.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel">Confirmation de suppression</h5>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Es-tu sur de vouloir supprimer la reservation ${reservation.id}?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                        <a class="btn btn-primary" href="./rents/delete?id=${reservation.id}">Confirmer</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <td>${reservation.id}</td>
+                                        <td>
+                                                ${vehicles.findById(reservation.vehicle_id).constructeur}
+                                                ${vehicles.findById(reservation.vehicle_id).modele}
+                                        </td>
+                                        <td>
+                                                ${clients.findById(reservation.client_id).nom}
+                                                ${clients.findById(reservation.client_id).prenom}
+                                        </td>
+                                        <td>${reservation.debut}</td>
+                                        <td>${reservation.fin}</td>
+                                        <td>
+                                            <a class="btn btn-success" href="${pageContext.request.contextPath}/rents/edit?id=${reservation.id}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
+                                            <a class="btn btn-danger" data-toggle="modal" data-target="#supprModal${reservation.id}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </c:forEach>
                             </table>
                         </div>
                         <!-- /.box-body -->

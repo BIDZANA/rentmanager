@@ -18,6 +18,8 @@ import java.time.format.DateTimeFormatter;
 @WebServlet("/users/edit")
 public class ClientEditServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
     public ClientEditServlet() {
     }
 
@@ -33,14 +35,13 @@ public class ClientEditServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Object parameter = request.getAttribute("id");
         long id = Long.parseLong((String) parameter);
-        final RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/users/edit.jsp");
         try {
             request.setAttribute("user", clientService.findById(id));
         } catch (final Exception e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        dispatcher.forward(request, response);
+        this.getServletContext().getRequestDispatcher("/WEB-INF/views/users/edit.jsp").forward(request, response);
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -57,6 +58,6 @@ public class ClientEditServlet extends HttpServlet {
             System.out.println(e.getMessage());
             e.printStackTrace();
         }
-        response.sendRedirect("http://localhost:8080/rentmanager/users");
+        response.sendRedirect(request.getContextPath() + "/users");
     }
 }

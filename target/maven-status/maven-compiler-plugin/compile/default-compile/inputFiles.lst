@@ -4,6 +4,7 @@ E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\model\Reservat
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\persistence\ConnectionManager.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\dao\ClientDao.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\utils\IOUtils.java
+E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\configuration\WebConfiguration.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\persistence\FillDatabase.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\dao\ReservationDao.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\ui\servlets\client\ClientDetailsServlet.java
@@ -14,7 +15,7 @@ E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\ui\servlets\re
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\ui\servlets\reservation\ReservationDeleteServlet.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\ui\servlets\client\ClientDeleteServlet.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\ui\servlets\client\ClientCreateServlet.java
-E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\ui\servlets\reservation\ReservationRow.java
+E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\configuration\AppConfiguration.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\exception\ServiceException.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\model\Vehicle.java
 E:\EPF Semestre8\TP\rentmanager\src\main\java\com\epf\rentmanager\ui\servlets\client\ClientListServlet.java

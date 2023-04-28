@@ -21,6 +21,8 @@ import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 @WebServlet("/cars/details")
 public class VehicleDetailsServlet extends HttpServlet {
 
+	private static final long serialVersionUID = 1L;
+
 	public VehicleDetailsServlet() {
 	}
 

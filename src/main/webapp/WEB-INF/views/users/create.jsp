@@ -28,32 +28,32 @@
                         <form class="form-horizontal" method="post">
                             <div class="box-body">
                                 <div class="form-group">
-                                    <label for="last_name" class="col-sm-2 control-label">Nom</label>
+                                    <label for="last_name" class="col-sm-2 control-label">Nom<label style="color: red">*</label></label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom">
+                                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Nom" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="first_name" class="col-sm-2 control-label">Prenom</label>
+                                    <label for="first_name" class="col-sm-2 control-label">Prenom<label style="color: red">*</label></label>
 
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom">
+                                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Prenom" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="email" class="col-sm-2 control-label">Email</label>
+                                    <label for="email" class="col-sm-2 control-label">Email<label style="color: red">*</label></label>
 
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email">
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="birth_date" class="col-sm-2 control-label">Date de naissance</label>
+                                    <label for="birth_date" class="col-sm-2 control-label">Date de naissance<label style="color: red">*</label></label>
 
                                     <div class="col-sm-10">
                                         <input type="text" class="form-control" id="birth_date" name="birth_date" required
-                                               data-inputmask="'alias': 'dd/mm/yyyy'" data-mask>
+                                               data-inputmask="'alias': 'yyyy-mm-dd'" data-mask>
                                     </div>
                                 </div>
                             </div>
@@ -68,6 +68,7 @@
                 </div>
                 <!-- /.col -->
             </div>
+            <p style="text-align: center"><label style="color: red">*</label> = champ obligatoire</p>
         </section>
         <!-- /.content -->
     </div>

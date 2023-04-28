@@ -20,6 +20,8 @@ import java.util.List;
 @WebServlet("/users/details")
 public class ClientDetailsServlet extends HttpServlet {
 
+    private static final long serialVersionUID = 1L;
+
     public ClientDetailsServlet() {
     }
 
