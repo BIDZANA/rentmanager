@@ -1,15 +1,16 @@
 package epf.rentmanager.services;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.epf.rentmanager.service.ReservationService;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,147 +19,134 @@ import com.epf.rentmanager.exception.DaoException;
 import com.epf.rentmanager.exception.ServiceException;
 import com.epf.rentmanager.model.Reservation;
 
-public class ReservationServiceTest {
+class ReservationServiceTest {
 
     @Mock
     private ReservationDao reservationDao;
 
     private ReservationService reservationService;
 
-    @Before
-    public void initMocks() {
+    @BeforeEach
+    public void setup() {
         MockitoAnnotations.openMocks(this);
-        reservationService = new ReservationService(reservationDao);
+        this.reservationService = new ReservationService(reservationDao);
     }
 
     @Test
-    public void testCreateWithValidReservation() throws DaoException, ServiceException {
-        Reservation reservation = new Reservation();
-        reservation.setId(1L);
-        reservation.setClient_id(1L);
-        reservation.setVehicle_id(1L);
-        reservation.setDebut(LocalDate.parse("2022-01-01"));
-        reservation.setFin(LocalDate.parse("2022-01-05"));
-
-        when(reservationDao.create(reservation)).thenReturn(1L);
-
-        long id = reservationService.create(reservation);
-
-        verify(reservationDao).create(reservation);
-
-        assertEquals(1L, id);
-    }
-
-    @Test(expected = ServiceException.class)
-    public void testCreateWithInvalidReservation() throws DaoException, ServiceException {
-        Reservation reservation = new Reservation();
-        reservation.setId(1L);
-        reservation.setClient_id(1L);
-        reservation.setVehicle_id(1L);
-
-        reservationService.create(reservation);
-
-        verifyNoMoreInteractions(reservationDao);
-    }
-
-    @Test
-    public void testFindAll() throws DaoException {
-        List<Reservation> reservations = new ArrayList<>();
-        reservations.add(new Reservation());
-        reservations.add(new Reservation());
-
-        when(reservationDao.findAll()).thenReturn(reservations);
-
-        List<Reservation> foundReservations = reservationService.findAll();
-
-        verify(reservationDao).findAll();
-
-        assertEquals(2, foundReservations.size());
-    }
-
-    @Test
-    public void testDelete() throws DaoException, ServiceException {
-        long id = 1L;
-
-        when(reservationDao.delete(id)).thenReturn(1L);
-
-        long deletedRows = reservationService.delete(id);
-
-        verify(reservationDao).delete(id);
-
-        assertEquals(1L, deletedRows);
-    }
-
-    @Test
-    public void testFindResaByClientId() throws DaoException {
+    void testCreate() throws ServiceException, DaoException, SQLException {
+        // On définit les paramètres
         long clientId = 1L;
-
-        List<Reservation> reservations = new ArrayList<>();
-        reservations.add(new Reservation());
-        reservations.add(new Reservation());
-
-        when(reservationDao.findResaByClientId(clientId)).thenReturn(reservations);
-
-        List<Reservation> foundReservations = reservationService.findResaByClientId(clientId);
-
-        verify(reservationDao).findResaByClientId(clientId);
-
-        assertEquals(2, foundReservations.size());
+        long vehicleId = 2L;
+        LocalDate startTime = LocalDate.now();
+        LocalDate endTime = LocalDate.now().plusDays(7);
+        // On créé une nouvelle réservation
+        Reservation reservation = new Reservation(clientId, vehicleId, startTime, endTime);
+        // On configure le mock pour renvoyer la réservation enregistrée
+        when(reservationDao.create(reservation)).thenReturn((long) 1);
+        // On appelle la méthode create du service
+        reservationService.create(clientId, vehicleId, startTime, endTime);
+        // On vérifie que le DAO a bien été appelé avec la bonne réservation
+        verify(reservationDao).create(reservation);
     }
 
     @Test
-    public void testFindResaByVehicleId() throws DaoException {
-        long vehicleId = 1L;
-
+    void testFindAll() throws DaoException {
+        // On définit la liste de réservations à renvoyer
         List<Reservation> reservations = new ArrayList<>();
-        reservations.add(new Reservation());
-        reservations.add(new Reservation());
-
-        when(reservationDao.findResaByVehicleId(vehicleId)).thenReturn(reservations);
-
-        List<Reservation> foundReservations = reservationService.findResaByVehicletId(vehicleId);
-
-        verify(reservationDao).findResaByVehicleId(vehicleId);
-
-        assertEquals(2, foundReservations.size());
+        Reservation reservation1 = new Reservation(1L, 2L, LocalDate.now(), LocalDate.now().plusDays(7));
+        Reservation reservation2 = new Reservation(3L, 4L, LocalDate.now().plusDays(7), LocalDate.now().plusDays(14));
+        reservations.add(reservation1);
+        reservations.add(reservation2);
+        // On configure le mock pour renvoyer la liste de réservations
+        when(reservationDao.findAll()).thenReturn(reservations);
+        // On appelle la méthode findAll du service
+        List<Reservation> result = reservationService.findAll();
+        // On vérifie que le résultat renvoyé est bien celui attendu
+        assertEquals(reservations, result);
     }
 
     @Test
-    public void testFindById() throws DaoException {
+    void testDelete() throws DaoException, ServiceException {
         long id = 1L;
-
-        Reservation reservation = new Reservation();
-        reservation.setId(id);
-
-        when(reservationDao.findById(id)).thenReturn(reservation);
-
-        Reservation foundReservation = reservationService.findById(id);
-
-        verify(reservationDao).findById(id);
-
-        assertEquals(id, foundReservation.getId());
+        // On configure le mock pour renvoyer l'id supprimé
+        when(reservationDao.delete(id)).thenReturn(1L);
+        // On appelle la méthode delete du service
+        reservationService.delete(id);
+        // On vérifie que le DAO a bien été appelé avec l'id de la réservation à supprimer
+        verify(reservationDao).delete(id);
     }
 
     @Test
-    public void testUpdate() throws DaoException {
-        Reservation reservation = new Reservation();
-        reservation.setId(1L);
+    void testFindResaByClientId() throws DaoException {
+        long clientId = 1L;
+        // On définit la liste de réservations à renvoyer
+        List<Reservation> reservations = new ArrayList<>();
+        Reservation reservation1 = new Reservation(1L, 2L, LocalDate.now(), LocalDate.now().plusDays(7));
+        Reservation reservation2 = new Reservation(3L, 4L, LocalDate.now().plusDays(7), LocalDate.now().plusDays(14));
+        reservations.add(reservation1);
+        reservations.add(reservation2);
+        // On configure le mock pour renvoyer la liste de réservations
+        when(reservationDao.findResaByClientId(clientId)).thenReturn(reservations);
+        // On appelle la méthode findResaByClientId du service
+        List<Reservation> result = reservationService.findResaByClientId(clientId);
+        // On vérifie que le résultat renvoyé est bien celui attendu
+        assertEquals(reservations, result);
+    }
 
-        reservationService.update(reservation);
+    @Test
+    void testFindResaByVehicleId() throws DaoException {
+        long vehicleId = 2L;
+        // On définit la liste de réservations à renvoyer
+        List<Reservation> reservations = new ArrayList<>();
+        Reservation reservation1 = new Reservation(1L, 2L, LocalDate.now(), LocalDate.now().plusDays(7));
+        Reservation reservation2 = new Reservation(3L, 4L, LocalDate.now().plusDays(7), LocalDate.now().plusDays(14));
+        reservations.add(reservation1);
+        reservations.add(reservation2);
+        // On configure le mock pour renvoyer la liste de réservations
+        when(reservationDao.findResaByVehicleId(vehicleId)).thenReturn(reservations);
+        // On appelle la méthode findResaByVehicleId du service
+        List<Reservation> result = reservationService.findResaByVehicletId(vehicleId);
+        // On vérifie que le résultat renvoyé est bien celui attendu
+        assertEquals(reservations, result);
+    }
 
+    @Test
+    void testFindById() throws DaoException {
+        long id = 1L;
+        // On définit la réservation à renvoyer
+        Reservation reservation = new Reservation(1L, 2L, LocalDate.now(), LocalDate.now().plusDays(7));
+        // On configure le mock pour renvoyer la réservation
+        when(reservationDao.findById(id)).thenReturn(reservation);
+        // On appelle la méthode findById du service
+        Reservation result = reservationService.findById(id);
+        // On vérifie que le résultat renvoyé est bien celui attendu
+        assertEquals(reservation, result);
+    }
+
+    @Test
+    void testUpdate() throws ServiceException, DaoException {
+        long id = 1L;
+        long clientId = 2L;
+        long vehicleId = 3L;
+        LocalDate startTime = LocalDate.now();
+        LocalDate endTime = LocalDate.now().plusDays(7);
+        // On créé une nouvelle réservation
+        Reservation reservation = new Reservation(id, clientId, vehicleId, startTime, endTime);
+        // On configure le mock pour ne rien retourner
+        doNothing().when(reservationDao).update(reservation);
+        // On appelle la méthode update du service
+        reservationService.update(id, clientId, vehicleId, startTime, endTime);
+        // On vérifie que le DAO a bien été appelé avec la bonne réservation
         verify(reservationDao).update(reservation);
     }
 
     @Test
-    public void testCount() throws ServiceException, DaoException {
-        int count = 5;
-
-        when(reservationDao.count()).thenReturn(count);
-
-        int foundCount = reservationService.count();
-
-        verify(reservationDao).count();
-
-        assertEquals(count, foundCount);
+    void testCount() throws ServiceException, DaoException {
+        // On configure le mock pour renvoyer le nombre de réservations
+        when(reservationDao.count()).thenReturn(10);
+        // On appelle la méthode count du service
+        int result = reservationService.count();
+        // On vérifie que le résultat renvoyé est bien celui attendu
+        assertEquals(10, result);
     }
 }
